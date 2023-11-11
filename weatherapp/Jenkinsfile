@@ -8,7 +8,6 @@ pipeline {
 	     agent {
             docker {
               image 'golang:alpine'
-              user   '0'
             }
            }
             steps {
