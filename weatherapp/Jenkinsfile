@@ -4,7 +4,7 @@ pipeline {
             }
     stages {
 
-        stage('test auth') {
+        stage('Test auth') {
 	     agent {
             docker {
               image 'golang:alpine'
@@ -23,7 +23,7 @@ pipeline {
         }
 
 
-        stage('test UI') {
+        stage('Test UI') {
 	     agent {
             docker {
               image 'node:17'
@@ -38,7 +38,7 @@ pipeline {
             }
         }
 
-        stage('test weather') {
+        stage('Test weather') {
 	     agent {
             docker {
               image 'python:3.8-slim-buster'
