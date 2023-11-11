@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+
+    stages {
+
+
+        stage('Hello1') {
+            steps {
+                sh '''
+                ls 
+                pwd
+                '''
+            }
+        }
+    }
+
+        stage('Hello2') {
+            steps {
+                sh '''
+                ls 
+                pwd
+                '''
+            }
+        }
+    }
+
+        stage('Hello3') {
+            steps {
+                sh '''
+                ls 
+                pwd
+                '''
+            }
+        }
+    }
+
+
+}
