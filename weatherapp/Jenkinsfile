@@ -23,11 +23,17 @@ pipeline {
         }
 
 
-        stage('Hello2') {
+        stage('test UI') {
+	     agent {
+            docker {
+              image 'node:17'
+              args '-u root:root'
+            }
+           }
             steps {
                 sh '''
-                ls 
-                pwd
+            cd weatherapp/UI
+            npm run
                 '''
             }
         }
