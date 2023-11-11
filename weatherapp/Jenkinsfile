@@ -38,15 +38,20 @@ pipeline {
             }
         }
 
-        stage('Hello3') {
+        stage('test weather') {
+	     agent {
+            docker {
+              image 'python:3.8-slim-buster'
+              args '-u root:root'
+            }
+           }
             steps {
                 sh '''
-                ls 
-                pwd
+            cd weatherapp/weather
+            pip3 install -r requirements.txt
                 '''
             }
         }
-
 
     }
 
