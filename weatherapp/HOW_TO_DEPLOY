@@ -1,0 +1,44 @@
+1- get the code url from the version control
+2- as the developper for any extra specifications
+3- determine the number of service 
+4- determine the number of service develop by my company 
+5  determine the number of  third party service NOT develop by my company 
+6- make sure I have all the dockerfile for the services my compay has developed
+7- write the dockerfile for  third party service NOT develop by my company
+8- determine with devops the deployment strategy 
+9 - make sure all required file for the deployment strategy is available 
+10 - determine ow to manage secrets (very important) 
+11- determine all deployment stages involve 
+     * write the Jenkinsfile
+       CODE
+          * clone the code 
+          * check important file if required
+          * build code binary if required 
+       CODE SCANNING
+        * scan the code using sonar-scanner
+        * report to sonarqube UI
+       CODE QUALITY
+        * check quality gate 
+             *  if the code PASS build continue
+             *  if the code FAILS  build STOP
+
+################# if CODE QUALITY pass #########################
+       BUILD DOCKER IMAGES
+            * build images usinfg docker 
+       PUSH  DOCKER IMAGES TO DOCKERHUB
+              * if the commit branch is NOT  develop
+                  * DO NOT PUSH 
+              * if the commit branch is  develop
+                  * PUSH to dockerhub
+        ############## if the commit branch is  develop  #########################
+                      * deploy the application 
+                           * contruc the docker-compose/helm override values file/etc...
+                           * deploy to a VM/K8S
+        SMOCK CHECK
+            * smock check of the application after deployment
+        POST BUILD 
+            * notify devops team on build output  on slack 
+            
+12 - create the project Jenkins 
+13 - make all required connection 
+14- implement the project in jenkins 
