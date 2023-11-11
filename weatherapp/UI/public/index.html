@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Weather app login</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css"
+          integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+            integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+            crossorigin="anonymous"></script>
+    <title>Weather App</title>
+</head>
+<body>
+<div class="header clearfix">
+    <nav>
+        <ul class="nav nav-pills pull-right">
+            <li role="presentation"><a href="/logout">
+                <button type="button" class="btn btn-danger">Logout</button>
+            </a></li>
+        </ul>
+    </nav>
+</div>
+<div class="page-header text-center">
+    <h1><img src="logo.png" alt="Weather App" width="90px" style="-webkit-transform: scaleX(-1);transform: scaleX(-1)">
+        Weather App
+        <small>Sample application for practicing DevOps</small></h1>
+</div>
+<div class="container">
+    <div class="input-group input-group-lg">
+        <span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-search"
+                                                                 aria-hidden="true"></span></span>
+        <input type="text" id="city" class="form-control" placeholder="City Name" aria-describedby="sizing-addon1"
+               required
+               autofocus>
+        <span class="input-group-btn">
+        <button type="button" id="go" class="btn btn-warning">Go!</button>
+        </span>
+    </div>
+    <div class="col-md-5">
+        <table id="result" class="table lead" hidden>
+            <tr>
+                <td colspan="2">
+                    <img id="weather_icon" src="" alt="">
+                    <span id="weather_text"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>City</td>
+                <td id="city_name"></td>
+            </tr>
+            <tr>
+                <td>Country</td>
+                <td id="country_name"></td>
+            </tr>
+            <tr>
+                <td>Temperature</td>
+                <td id="temp"></td>
+            </tr>
+            <tr>
+                <td>Feels Like</td>
+                <td id="feels_like"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script src="/index.js"></script>
+</body>
+</html>

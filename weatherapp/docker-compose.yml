@@ -1,0 +1,79 @@
+version: '3.5'
+
+services:
+  db:
+    container_name: weatherapp-db
+    image: devopseasylearning/weatherapp-db:v0.0.1
+    environment:
+      MYSQL_ROOT_PASSWORD: my-secret-pw
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - weatherapp
+    restart: always
+
+  redis:
+    container_name: weatherapp-redis
+    image: redis
+    networks:
+      - weatherapp
+    environment:
+      REDIS_USER: redis
+      REDIS_PASSWORD: redis
+    volumes:
+      - redis-data:/data
+    restart: always
+
+  weather:
+    container_name: weatherapp-weather
+    image: devopseasylearning/weatherapp-weather:v0.0.1
+    expose:
+      - 5000
+    environment:
+      APIKEY: ecbc396f46mshb65cbb1f82cf334p1fcc87jsna5e962a3c542
+    networks:
+      - weatherapp
+    restart: always
+    depends_on:
+      - db
+      - redis  # Weather depends on both db and redis
+  auth:
+    container_name: weatherapp-auth
+    image: devopseasylearning/weatherapp-auth:v0.0.1
+    environment:
+      DB_HOST: db
+      DB_PASSWORD: my-secret-pw
+    expose:
+      - 8080
+    networks:
+      - weatherapp
+    restart: always
+    depends_on:
+      - weather  # Auth depends on the weather service
+
+  ui:
+    container_name: weatherapp-ui
+    image: devopseasylearning/weatherapp-ui:v0.0.1
+    environment:
+     eric: eric
+     AUTH_HOST: auth
+     AUTH_PORT: 8080
+     WEATHER_HOST: weather
+     WEATHER_PORT: 5000
+     REDIS_USER: redis
+     REDIS_PASSWORD: redis
+    expose:
+      - 3000
+    ports:
+      - 3000:3000
+    networks:
+      - weatherapp
+    restart: always
+    depends_on:
+      - auth  # UI depends on Auth
+networks:
+  weatherapp:
+
+volumes:
+  db-data:
+  redis-data:

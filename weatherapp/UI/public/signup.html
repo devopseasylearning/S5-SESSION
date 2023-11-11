@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Weather app signup</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css"
+          integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+            integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+            crossorigin="anonymous"></script>
+</head>
+
+<body>
+<div class="page-header text-center">
+    <h1><img src="/logo.png" alt="Weather App" width="90px" style="-webkit-transform: scaleX(-1);transform: scaleX(-1)"> Weather App
+        <small>Sample application for practicing DevOps</small></h1>
+</div>
+<div class="container-fluid">
+    <form class="form-signin col-xs-8 col-xs-offset-2  col-sm-6 col-sm-offset-3 col-md-4 col-sm-offset-4 col-lg-2 col-lg-offset-5" method="post" action="/signup">
+        <h2 class="form-signin-heading">Please enter your details</h2>
+        <label for="username" class="sr-only">User Name</label>
+        <input type="username" id="username" name="username" class="form-control" placeholder="User Name" required autofocus>
+        <div style="height: 10px"></div>
+        <label for="password" class="sr-only">Password</label>
+        <input type="password" id="password" class="form-control" name="password" placeholder="Password" required>
+        <div style="height: 10px"></div>
+        <label for="confirm_password" class="sr-only">Repeat Password</label>
+        <input type="password" id="confirm_password" class="form-control" name="confirm_password" placeholder="Repeat Password" required>
+        <div style="height: 20px"></div>
+        <button class="btn btn-lg btn-primary btn-block" id="login" type="submit">Sign up</button>
+    </form>
+</div> <!-- /container -->
+<div class="container">
+    <div style="height: 20px"></div>
+    <div class="alert alert-danger" id="signupresult" hidden role="alert"></div>
+</div>
+<script type="application/javascript" src="/signup.js"></script>
+</body>
+
+</html>
