@@ -3,11 +3,16 @@ pipeline {
 
     stages {
 
-        stage('Hello1') {
+        stage('test auth') {
+	     agent {
+            docker {
+              image 'golang:alpine'
+            }
+           }
             steps {
                 sh '''
-                ls 
-                pwd
+            pwd
+            ls -l
                 '''
             }
         }
