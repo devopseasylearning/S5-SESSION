@@ -229,7 +229,7 @@ cat <<EOF > docker-compose.yml
         MYSQL_ROOT_PASSWORD: ${WEATHERAPP_MYSQL_ROOT_PASSWORD}
       volumes:
         - db-data:/var/lib/mysql
-      networks:   WEATHERAPP
+      networks:   
         - weatherapp
       restart: always
   
