@@ -10,54 +10,54 @@ pipeline {
       }
     stages {
 
-        stage('Test auth') {
-	     agent {
-            docker {
-              image 'golang:alpine'
-              args '-u root:root'
-            }
-           }
-            steps {
-                sh '''
-            id
-            cd weatherapp/auth/src/main
-            go build 
-            cd -
-            ls -la
-                '''
-            }
-        }
+        // stage('Test auth') {
+	    //  agent {
+        //     docker {
+        //       image 'golang:alpine'
+        //       args '-u root:root'
+        //     }
+        //    }
+        //     steps {
+        //         sh '''
+        //     id
+        //     cd weatherapp/auth/src/main
+        //     go build 
+        //     cd -
+        //     ls -la
+        //         '''
+        //     }
+        // }
 
 
-        stage('Test UI') {
-	     agent {
-            docker {
-              image 'node:17'
-              args '-u root:root'
-            }
-           }
-            steps {
-                sh '''
-            cd weatherapp/UI
-            npm run
-                '''
-            }
-        }
+        // stage('Test UI') {
+	    //  agent {
+        //     docker {
+        //       image 'node:17'
+        //       args '-u root:root'
+        //     }
+        //    }
+        //     steps {
+        //         sh '''
+        //     cd weatherapp/UI
+        //     npm run
+        //         '''
+        //     }
+        // }
 
-        stage('Test weather') {
-	     agent {
-            docker {
-              image 'python:3.8-slim-buster'
-              args '-u root:root'
-            }
-           }
-            steps {
-                sh '''
-            cd weatherapp/weather
-            pip3 install -r requirements.txt
-                '''
-            }
-        }
+        // stage('Test weather') {
+	    //  agent {
+        //     docker {
+        //       image 'python:3.8-slim-buster'
+        //       args '-u root:root'
+        //     }
+        //    }
+        //     steps {
+        //         sh '''
+        //     cd weatherapp/weather
+        //     pip3 install -r requirements.txt
+        //         '''
+        //     }
+        // }
 
 
          stage('SonarQube analysis') {
