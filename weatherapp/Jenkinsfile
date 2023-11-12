@@ -88,8 +88,51 @@ pipeline {
         }
 
 
+        stage('Build auth') {
+            steps {
+                sh '''
+            cd $WORKSPACE/weatherapp/auth
+            docker build -t devopseasylearning/weatherapp-auth:${BUILD_NUMBER} .
+                '''
+            }
+        }
+
+        stage('Build UI') {
+            steps {
+                sh '''
+            cd $WORKSPACE/weatherapp/UI
+            docker build -t devopseasylearning/weatherapp-ui:${BUILD_NUMBER} .
+                '''
+            }
+        }
+
+        stage('Build Weather') {
+            steps {
+                sh '''
+            cd $WORKSPACE/weatherapp/weather
+            docker build -t devopseasylearning/weatherapp-weather:${BUILD_NUMBER} .
+                '''
+            }
+        }
+
+        stage('Build Redis') {
+            steps {
+                sh '''
+            cd $WORKSPACE/weatherapp/redis
+            docker build -t devopseasylearning/weatherapp-redis:${BUILD_NUMBER} .
+                '''
+            }
+        }
 
 
+        stage('Build db') {
+            steps {
+                sh '''
+            cd $WORKSPACE/weatherapp/db
+            docker build -t devopseasylearning/weatherapp-db:${BUILD_NUMBER} .
+                '''
+            }
+        }
 
     }
 
