@@ -13,30 +13,6 @@ pipeline {
         timestamps()
       }
     stages {
-        stage('secret') {
-
-	      steps {
-	        script {
-	          withCredentials([
-	            string(credentialsId: 'WEATHERAPP_MYSQL_ROOT_PASSWORD', variable: 'WEATHERAPP_MYSQL_ROOT_PASSWORD'),
-	            string(credentialsId: 'WEATHERAPP_REDIS_PASSWORD', variable: 'WEATHERAPP_REDIS_PASSWORD'),
-	            string(credentialsId: 'WEATHERAPP_DB_PASSWORD', variable: 'WEATHERAPP_DB_PASSWORD'),
-                string(credentialsId: 'WEATHERAPP_APIKEY', variable: 'WEATHERAPP_APIKEY')
-	          ]) {
-
-	            sh '''
-                echo $WEATHERAPP_MYSQL_ROOT_PASSWORD
-                echo $WEATHERAPP_REDIS_PASSWORD
-                echo $WEATHERAPP_DB_PASSWORD
-                echo $WEATHERAPP_APIKEY
-	            '''
-	          }
-
-	        }
-
-	      }
-
-	    }
 
         // stage('Test auth') {
 	    //  agent {
@@ -221,6 +197,132 @@ pipeline {
                 '''
             }
         }
+
+
+
+
+        stage('Generate-compose') {
+	      agent { 
+                label "deployer"
+                 }
+         when{ 
+          expression {
+            env.GIT_BRANCH == 'origin/develop' }
+            }
+	      steps {
+	        script {
+	          withCredentials([
+	            string(credentialsId: 'WEATHERAPP_MYSQL_ROOT_PASSWORD', variable: 'WEATHERAPP_MYSQL_ROOT_PASSWORD'),
+	            string(credentialsId: 'WEATHERAPP_REDIS_PASSWORD', variable: 'WEATHERAPP_REDIS_PASSWORD'),
+	            string(credentialsId: 'WEATHERAPP_DB_PASSWORD', variable: 'WEATHERAPP_DB_PASSWORD'),
+                string(credentialsId: 'WEATHERAPP_APIKEY', variable: 'WEATHERAPP_APIKEY')
+	          ]) {
+
+	            sh '''
+cat <<EOF > docker-compose.yml
+  version: '3.5'
+  services:
+    db:
+      container_name: weatherapp-db
+      image: devopseasylearning/weatherapp-db:${BUILD_NUMBER}
+      environment:
+        MYSQL_ROOT_PASSWORD: ${WEATHERAPP_MYSQL_ROOT_PASSWORD}
+      volumes:
+        - db-data:/var/lib/mysql
+      networks:   WEATHERAPP
+        - weatherapp
+      restart: always
+  
+    redis:
+      container_name: weatherapp-redis
+      image: redis:${BUILD_NUMBER}
+      networks:
+        - weatherapp
+      environment:
+        REDIS_USER: redis
+        REDIS_PASSWORD: ${WEATHERAPP_REDIS_PASSWORD}
+      volumes:
+        - redis-data:/data
+      restart: always
+  
+    weather:
+      container_name: weatherapp-weather
+      image: devopseasylearning/weatherapp-weather:${BUILD_NUMBER}
+      expose:
+        - 5000
+      environment:
+        APIKEY: ${WEATHERAPP_APIKEY}
+      networks:
+        - weatherapp
+      restart: always
+      depends_on:
+        - db
+        - redis  # Weather depends on both db and redis
+    auth:
+      container_name: weatherapp-auth
+      image: devopseasylearning/weatherapp-auth:${BUILD_NUMBER}
+      environment:
+        DB_HOST: db
+        DB_PASSWORD: ${WEATHERAPP_DB_PASSWORD}
+      expose:
+        - 8080
+      networks:
+        - weatherapp
+      restart: always
+      depends_on:
+        - weather  # Auth depends on the weather service
+  
+    ui:
+      container_name: weatherapp-ui
+      image: devopseasylearning/weatherapp-ui:${BUILD_NUMBER}
+      environment:
+       AUTH_HOST: auth
+       AUTH_PORT: 8080
+       WEATHER_HOST: weather
+       WEATHER_PORT: 5000
+       REDIS_USER: redis
+       REDIS_PASSWORD: ${WEATHERAPP_REDIS_PASSWORD}
+      expose:
+        - 3000
+      ports:
+        - 3000:3000
+      networks:
+        - weatherapp
+      restart: always
+      depends_on:
+        - auth  # UI depends on Auth
+  networks:
+    weatherapp:
+  
+  volumes:
+    db-data:
+    redis-data:
+EOF
+	            '''
+	          }
+
+	        }
+
+	      }
+
+	    }
+
+
+        stage('Deploy') {
+	      agent { 
+                label "deployer"
+                 }
+         when{ 
+          expression {
+            env.GIT_BRANCH == 'origin/develop' }
+            }
+            steps {
+                sh '''
+             cat docker-compose.yml
+                '''
+            }
+        }
+
 
     }
 
