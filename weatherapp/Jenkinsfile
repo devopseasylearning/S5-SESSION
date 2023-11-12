@@ -10,14 +10,18 @@ pipeline {
         timestamps()
       }
     stages {
-        // stage("confirm branch") {
-        //     steps {
-        //         sh '''
-        //         git branch --show-current
-        //          echo $GIT_BRANCH
-        //         '''
-        //     }
-        // }
+
+        stage("confirm branch") {
+          expression {
+            env.GIT_BRANCH == 'origin/develop' }
+            }
+            steps {
+                sh '''
+                git branch --show-current
+                 echo $GIT_BRANCH
+                '''
+            }
+        }
 
         // stage('Test auth') {
 	    //  agent {
