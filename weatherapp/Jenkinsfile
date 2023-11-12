@@ -235,7 +235,7 @@ cat <<EOF > docker-compose.yml
   
     redis:
       container_name: weatherapp-redis
-      image: redis:${BUILD_NUMBER}
+      image: devopseasylearning/weatherapp-redis:${BUILD_NUMBER}
       networks:
         - weatherapp
       environment:
@@ -318,7 +318,7 @@ EOF
             }
             steps {
                 sh '''
-            docker-compose down --remove-orphans
+            docker-compose down --remove-orphans || true
             docker-compose up -d 
             docker-compose ps 
             ip addr show eth0 | grep inet | awk '{print $2}' | cut -d/ -f1
