@@ -9,6 +9,13 @@ pipeline {
         timestamps()
       }
     stages {
+        stage("confirm branch") {
+            steps {
+                sh '''
+                git rev-parse --abbrev-ref HEAD
+                '''
+            }
+        }
 
         // stage('Test auth') {
 	    //  agent {
