@@ -96,6 +96,17 @@ pipeline {
                 '''
             }
         }
+        stage('Push auth') {
+            when {
+                branch 'develop'
+            }
+            steps {
+                sh '''
+             docker push devopseasylearning/weatherapp-auth:${BUILD_NUMBER}
+                '''
+            }
+        }
+
 
         stage('Build UI') {
             steps {
@@ -105,7 +116,16 @@ pipeline {
                 '''
             }
         }
-
+        stage('Push UI ') {
+            when {
+                branch 'develop'
+            }
+            steps {
+                sh '''
+             docker push devopseasylearning/weatherapp-ui:${BUILD_NUMBER}
+                '''
+            }
+        }
         stage('Build Weather') {
             steps {
                 sh '''
@@ -114,7 +134,16 @@ pipeline {
                 '''
             }
         }
-
+        stage('Push weather') {
+            when {
+                branch 'develop'
+            }
+            steps {
+                sh '''
+             docker push devopseasylearning/weatherapp-weather:${BUILD_NUMBER}
+                '''
+            }
+        }
         stage('Build Redis') {
             steps {
                 sh '''
@@ -124,12 +153,32 @@ pipeline {
             }
         }
 
-
+        stage('Push redis') {
+            when {
+                branch 'develop'
+            }
+            steps {
+                sh '''
+             docker push devopseasylearning/weatherapp-redis:${BUILD_NUMBER}
+                '''
+            }
+        }
         stage('Build db') {
             steps {
                 sh '''
             cd $WORKSPACE/weatherapp/db
             docker build -t devopseasylearning/weatherapp-db:${BUILD_NUMBER} .
+                '''
+            }
+        }
+
+        stage('Push db') {
+            when {
+                branch 'develop'
+            }
+            steps {
+                sh '''
+             docker push devopseasylearning/weatherapp-db:${BUILD_NUMBER}
                 '''
             }
         }
