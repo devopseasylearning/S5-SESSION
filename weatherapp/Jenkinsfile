@@ -3,6 +3,9 @@ pipeline {
     agent {
         label ("aws-deploy")
             }
+  environment {
+		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
+	}
     options {
         buildDiscarder(logRotator(numToKeepStr: '5'))
         disableConcurrentBuilds()
@@ -11,17 +14,6 @@ pipeline {
       }
     stages {
 
-        stage("confirm branch") {
-          expression {
-            env.GIT_BRANCH == 'origin/develop' }
-            }
-            steps {
-                sh '''
-                git branch --show-current
-                 echo $GIT_BRANCH
-                '''
-            }
-        }
 
         // stage('Test auth') {
 	    //  agent {
@@ -100,7 +92,13 @@ pipeline {
             }
         }
 
+    stage('Login') {
 
+			steps {
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
+        
         stage('Build auth') {
             steps {
                 sh '''
@@ -131,6 +129,10 @@ pipeline {
             }
         }
         stage('Push UI ') {
+         when{ 
+          expression {
+            env.GIT_BRANCH == 'origin/develop' }
+            }
             when {
                 branch 'HEAD'
             }
@@ -149,8 +151,9 @@ pipeline {
             }
         }
         stage('Push weather') {
-            when {
-                branch 'HEAD'
+         when{ 
+          expression {
+            env.GIT_BRANCH == 'origin/develop' }
             }
             steps {
                 sh '''
@@ -168,8 +171,9 @@ pipeline {
         }
 
         stage('Push redis') {
-            when {
-                branch 'HEAD'
+         when{ 
+          expression {
+            env.GIT_BRANCH == 'origin/develop' }
             }
             steps {
                 sh '''
@@ -187,8 +191,9 @@ pipeline {
         }
 
         stage('Push db') {
-            when {
-                branch 'HEAD'
+         when{ 
+          expression {
+            env.GIT_BRANCH == 'origin/develop' }
             }
             steps {
                 sh '''
