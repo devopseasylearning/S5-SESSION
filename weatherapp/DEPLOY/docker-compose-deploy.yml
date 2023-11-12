@@ -29,7 +29,7 @@ services:
     expose:
       - 5000
     environment:
-      APIKEY: {APIKEY}
+      APIKEY: ${WEATHERAPP_APIKEY}
     networks:
       - weatherapp
     restart: always
@@ -59,7 +59,7 @@ services:
      WEATHER_HOST: weather
      WEATHER_PORT: 5000
      REDIS_USER: redis
-     REDIS_PASSWORD: redis
+     REDIS_PASSWORD: ${WEATHERAPP_REDIS_PASSWORD}
     expose:
       - 3000
     ports:

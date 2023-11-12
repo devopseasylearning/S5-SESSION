@@ -21,14 +21,14 @@ pipeline {
 	            string(credentialsId: 'WEATHERAPP_MYSQL_ROOT_PASSWORD', variable: 'WEATHERAPP_MYSQL_ROOT_PASSWORD'),
 	            string(credentialsId: 'WEATHERAPP_REDIS_PASSWORD', variable: 'WEATHERAPP_REDIS_PASSWORD'),
 	            string(credentialsId: 'WEATHERAPP_DB_PASSWORD', variable: 'WEATHERAPP_DB_PASSWORD'),
-                string(credentialsId: 'APIKEY', variable: 'APIKEY')
+                string(credentialsId: 'WEATHERAPP_APIKEY', variable: 'WEATHERAPP_APIKEY')
 	          ]) {
 
 	            sh '''
                 echo $WEATHERAPP_MYSQL_ROOT_PASSWORD
                 echo $WEATHERAPP_REDIS_PASSWORD
                 echo $WEATHERAPP_DB_PASSWORD
-                echo $APIKEY
+                echo $WEATHERAPP_APIKEY
 	            '''
 	          }
 
