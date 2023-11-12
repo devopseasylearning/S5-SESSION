@@ -12,7 +12,8 @@ pipeline {
         stage("confirm branch") {
             steps {
                 sh '''
-                git rev-parse --abbrev-ref HEAD
+                git branch --show-current
+
                 '''
             }
         }
