@@ -13,7 +13,7 @@ pipeline {
             steps {
                 sh '''
                 git branch --show-current
-
+                 echo $GIT_BRANCH
                 '''
             }
         }
