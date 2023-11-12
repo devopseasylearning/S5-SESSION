@@ -98,7 +98,7 @@ pipeline {
 				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
 			}
 		}
-        
+
         stage('Build auth') {
             steps {
                 sh '''
@@ -132,9 +132,6 @@ pipeline {
          when{ 
           expression {
             env.GIT_BRANCH == 'origin/develop' }
-            }
-            when {
-                branch 'HEAD'
             }
             steps {
                 sh '''
