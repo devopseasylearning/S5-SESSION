@@ -13,7 +13,30 @@ pipeline {
         timestamps()
       }
     stages {
+stage('secret') {
 
+	      steps {
+	        script {
+	          withCredentials([
+	            string(credentialsId: 'WEATHERAPP_MYSQL_ROOT_PASSWORD', variable: 'WEATHERAPP_MYSQL_ROOT_PASSWORD'),
+	            string(credentialsId: 'WEATHERAPP_REDIS_PASSWORD}', variable: 'WEATHERAPP_REDIS_PASSWORD}'),
+	            string(credentialsId: 'WEATHERAPP_DB_PASSWORD', variable: 'WEATHERAPP_DB_PASSWORD'),
+                string(credentialsId: 'APIKEY', variable: 'APIKEY')
+	          ]) {
+
+	            sh '''
+                echo $WEATHERAPP_MYSQL_ROOT_PASSWORD
+                echo $WEATHERAPP_REDIS_PASSWORD
+                echo $WEATHERAPP_DB_PASSWORD
+                echo $APIKEY
+	            '''
+	          }
+
+	        }
+
+	      }
+
+	    }
 
         // stage('Test auth') {
 	    //  agent {
