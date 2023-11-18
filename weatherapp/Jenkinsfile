@@ -1,8 +1,9 @@
 
 pipeline {
-    agent {
-        label ("aws-deploy")
-            }
+    // agent {
+    //     label ("aws-deploy")
+    //         }
+  agent any
   environment {
 		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
 	}
